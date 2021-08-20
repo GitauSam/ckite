@@ -2,7 +2,6 @@ from typing import Optional
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi.encoders import jsonable_encoder
 
 app = FastAPI()
 
@@ -40,6 +39,7 @@ async def deactivate_user(user_id: int):
     return u
 
 @app.put("/user/edit/{user_id}")
-async def update_user(user_id: int, u = UserModel):
+async def update_user(user_id: int, u: UserModel):
+    u.status = 1
     userStore[user_id] = u
     return userStore[user_id]
